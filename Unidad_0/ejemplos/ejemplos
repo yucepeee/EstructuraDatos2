@@ -1,0 +1,120 @@
+""" Aplicación de PEP 8
+-------------------------
+Ejemplos aplicando la guía de estilo oficial PEP 8 para código Python.
+
+Autor: Gabriel Romulo Arnez Joven
+
+Registro: 220000417
+
+Materia: Estructura de Datos 2
+
+Profesor: Ing. Juan Carlos Peinado Pereira
+
+Fecha: 19/08/2026 """
+
+import math
+
+class Geometria:
+    """Clase para cálculos geométricos básicos."""
+
+    def __init__(self, radio):
+        """Initializes the Geometria instance.
+
+        Args:
+            radio (int or float): Radio del círculo (en unidades de medida).
+
+        Returns:
+            (int or float).
+        """
+        self.radio = radio
+
+    def calcular_area_circulo(self):
+        # Fórmula del área de un círculo: π * r²
+        return math.pi * (self.radio ** 2)
+
+# Ejemplo usado
+figura = Geometria(5)
+print(figura.calcular_area_circulo())
+
+#   ====================================================
+
+def filtrar_pares(numeros):
+    """Filtra y devuelve únicamente los números pares de una lista.
+
+    Args:
+        numeros (list): Lista con números enteros.
+
+    Returns:
+        list: Nueva lista con los números pares.
+    """
+    pares = [numero for numero in numeros if numero % 2 == 0]
+    return pares
+
+
+if __name__ == "__main__":
+    # Llamada al metodo filtrar_pares()
+    lista_original = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    resultado = filtrar_pares(lista_original)
+    print(f"Lista de pares: {resultado}")
+
+#   ====================================================
+
+def obtener_maximo(numeros):
+    """Encuentra el valor máximo dentro de una lista de números.
+
+    Args:
+        numeros (list): Lista con elementos numéricos.
+
+    Returns:
+        int o float: El número con el valor más alto.
+    """
+    if not numeros:
+        return None
+
+    maximo = numeros[0]
+    for numero in numeros:
+        if numero > maximo:
+            maximo = numero
+    return maximo
+
+
+if __name__ == "__main__":
+    # Llamada al metodo obtener_maximo()
+    calificaciones = [85, 92, 78, 95, 88]
+    nota_alta = obtener_maximo(calificaciones)
+    print(f"La calificación más alta es: {nota_alta}")
+
+#   ===================================================
+
+def apilar(pila, elemento):
+    """Agrega un elemento en la cima de la pila."""
+    pila.append(elemento)
+
+
+def desapilar(pila):
+    """Remueve y retorna el último elemento ingresado en la pila.
+
+    Returns:
+        Any: El elemento removido o None si la pila está vacía.
+    """
+    if not pila:
+        return None
+    return pila.pop()
+
+
+if __name__ == "__main__":
+    pila_navegacion = []
+
+    # Insertar elementos
+    apilar(pila_navegacion, 1)
+    apilar(pila_navegacion, 3)
+    apilar(pila_navegacion, 6)
+    apilar(pila_navegacion, 2)
+    apilar(pila_navegacion, 8)
+
+    print(f"Estado de la pila: {pila_navegacion}")
+
+    # Extraer el último elemento ingresado
+    ultimo_sitio = desapilar(pila_navegacion)
+    print(f"Elemento removido: {ultimo_sitio}")
+    print(f"Pila actual: {pila_navegacion}")
