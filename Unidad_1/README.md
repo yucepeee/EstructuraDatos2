@@ -1,18 +1,4 @@
-
 # Unidad I: Árboles Binarios de Búsqueda
-
-Implementación en Python de un **árbol binario de búsqueda (ABB)** como parte de la Unidad I de la asignatura **Estructura de Datos 2**.
-
-## Contenido
-
-- [Concepto general](#concepto-general)
-- [Terminología](#terminología)
-- [Funcionamiento de un ABB](#funcionamiento-de-un-abb)
-- [Recorrido inorden](#recorrido-inorden)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Ejecución](#ejecución)
-
-## Concepto general
 
 Un árbol binario es una estructura de datos no lineal formada por nodos. Cada nodo puede tener como máximo dos hijos: un **hijo izquierdo** y un **hijo derecho**.
 
@@ -49,11 +35,11 @@ La clase `arbolB` utiliza la clase `Node` para representar cada elemento. La ins
 Ejemplo de los valores insertados en el programa:
 
 ```text
-							15
-						/    \
-					 6      20
-					/ \    /  \
-				 3   9  18   24
-				/ \ / \  /
-			 1  4 7 12 17
+             15
+           /    \
+          6      20
+        /  \    /  \
+       3    9  18   24
+      / \  / \  /
+     1  4 7  12 17
 ```
