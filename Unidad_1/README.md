@@ -43,3 +43,97 @@ Ejemplo de los valores insertados en el programa:
       / \  / \  /
      1  4 7  12 17
 ```
+
+  ## Operaciones básicas
+
+  La clase `ABB` incluye las siguientes operaciones principales:
+
+  | Operación | Descripción |
+  | --- | --- |
+  | `insertar(valor)` | Agrega un valor al árbol. No se permiten valores duplicados. |
+  | `buscar(valor)` | Verifica si un valor existe y devuelve `True` o `False`. |
+  | `eliminar(valor)` | Elimina un valor del árbol si se encuentra. |
+  | `esta_vacio()` | Verifica si el árbol no contiene elementos. |
+
+	### `insertar(valor)`
+
+    Al insertar los valores `15`, `6` y `20`, el árbol queda así:
+
+    ```text
+      15
+     /  \
+    6    20
+    ```
+
+    Al insertar el valor `3`, como es menor que `15` y menor que `6`, se coloca
+    en el subárbol izquierdo de `6`:
+
+    ```text
+      15
+     /  \
+    6    20
+      /
+     3
+    ```
+
+    ### `buscar(valor)`
+
+    Para buscar el valor `9`, se realizan estas comparaciones:
+
+    ```text
+    9 > 6  -> avanzar al subárbol derecho
+    9 < 15 -> avanzar al subárbol izquierdo
+
+      15
+     /  \
+    6    20
+     \
+      9  <- valor encontrado
+    ```
+
+    Si se busca el valor `10`, se sigue el mismo camino, pero no se encuentra
+    ningún nodo con ese valor:
+
+    ```text
+    10 < 15 -> avanzar a la izquierda
+    10 > 6  -> avanzar a la derecha
+    10 > 9  -> avanzar a la derecha
+    None    -> valor no encontrado
+    ```
+
+    ### `eliminar(valor)`
+
+    Antes de eliminar el valor `6`:
+
+    ```text
+      15
+     /  \
+    6    20
+      / \
+     3   9
+    ```
+
+    Después de eliminarlo, sus hijos se reorganizan y el árbol queda así:
+
+    ```text
+      15
+     /  \
+    9    20
+      /
+     3
+    ```
+
+    ### `esta_vacio()`
+
+    Un ABB recién creado no tiene raíz:
+
+    ```text
+    ABB vacío
+    raíz: None
+    ```
+
+    Después de insertar un valor, deja de estar vacío:
+
+    ```text
+     15
+    ```
