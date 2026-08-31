@@ -10,7 +10,7 @@ Materia: Estructura de Datos 2
 
 Profesor: Ing. Juan Carlos Peinado Pereira
 
-Fecha: 29/08/2026 """
+Fecha: 31/08/2026 """
 
 class Nodo:
     def __init__(self, valor):
