@@ -23,6 +23,8 @@ class Nodo:
     def __repr__(self):
         return f"Nodo({self._valor})"
 
+    """ Metodos de acceso para los atributos del nodo. """
+
     @property
     def valor(self):
         return self._valor
@@ -53,12 +55,15 @@ class Nodo:
     def set_valor(self, valor):
         self._valor = valor
 
+
 class ArbolBB:
     """ Clase Árbol Binario de Búsqueda (ABB). """
 
     def __init__(self):
         self._raiz = None
         self._tamaño = 0
+
+    """ Metodos de acceso para los atributos del árbol. """
 
     @property
     def raiz(self):
@@ -85,6 +90,7 @@ class ArbolBB:
     #   -------------------------------------------------
     #   Operaciones básicas del ABB
     #   -------------------------------------------------
+
     def insertar(self, valor):
         """ Inserta un nuevo valor en el ABB manteniendo 
             la propiedad del árbol binario de búsqueda.
@@ -111,7 +117,6 @@ class ArbolBB:
                 nodo._derecha = Nodo(valor)
                 return True
             return self._insertar_recursivo(nodo._derecha, valor)
-
         # Si el valor ya existe, no se hace nada (no se permiten duplicados).
 
     def buscar(self, valor):
@@ -121,7 +126,8 @@ class ArbolBB:
         return self._buscar_recursivo(self._raiz, valor)
 
     def _buscar_recursivo(self, nodo, valor):
-        """ Método auxiliar para buscar un valor de manera recursiva. """
+        """ Método auxiliar para buscar un valor de manera recursiva. 
+        """
         if nodo is None:
             return False
         if valor == nodo.valor:
@@ -132,7 +138,8 @@ class ArbolBB:
             return self._buscar_recursivo(nodo.derecha, valor)
 
     def esHoja(self, nodo):
-        """ Verifica si un nodo es hoja (no tiene hijos). """
+        """ Verifica si un nodo es hoja (no tiene hijos).
+    """
         if nodo is None:
             return False
         return nodo.izquierda is None and nodo.derecha is None
@@ -154,5 +161,27 @@ class ArbolBB:
 
         return self._tamaño
 
+# Ejemplo de uso del ABB
 
-        
+if __name__ == "__main__":
+    # Crear un ABB
+    arbol = ArbolBB()
+
+    # Insertar valores en el ABB
+    valores = [50, 30, 70, 20, 40, 60, 80]
+    for valor in valores:
+        arbol.insertar(valor)
+
+    # Buscar valores en el ABB
+    print("Buscar 40:", arbol.buscar(40))  # True
+    print("Buscar 90:", arbol.buscar(90))  # False
+
+    # Verificar si un nodo es hoja
+    nodo_20 = arbol._raiz.izquierda.izquierda  # Nodo con valor 20
+    print("Es hoja (20):", arbol.esHoja(nodo_20))  # True
+
+    # Altura del ABB
+    print("Altura del ABB:", arbol.altura())  # 3
+
+    # Cantidad de nodos en el ABB
+    print("Cantidad de nodos:", arbol.cantidad_nodos())  # 7

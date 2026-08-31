@@ -17,6 +17,8 @@ class Nodo:
         self._valor = valor
         self._hijos = []
 
+    """ Metodos de acceso para los atributos del nodo. """
+
     def get_valor(self):
         return self._valor
 
@@ -30,8 +32,11 @@ class Nodo:
         self._hijos = hijos
 
 class Arbol:
+    """ Clase Árbol Binario. """
     def __init__(self, valor):
         self._raiz = Nodo(valor)
+
+    """ Metodos de acceso para los atributos del árbol. """
 
     def get_raiz(self):
         return self._raiz
@@ -44,16 +49,24 @@ class Arbol:
     # -----------------------------------
 
     def insertar_Nodo(self, nodo, valor):
+        """ Inserta un nuevo nodo con el valor dado como hijo del nodo especificado. """
+
         nuevo_nodo = Nodo(valor)
         nodo._hijos.append(nuevo_nodo)
 
     def es_vacio(self):
+        """ Verifica si el árbol está vacío. """
+
         return self._raiz is None
 
     def es_hoja(self, nodo):
+        """ Verifica si un nodo es hoja (no tiene hijos). """
+
         return len(nodo._hijos) == 0
 
     def buscar(self, nodo, valor):
+        """ Busca un nodo con el valor dado en el árbol. """
+
         if nodo._valor == valor:
             return nodo
         for hijo in nodo._hijos:
@@ -62,14 +75,16 @@ class Arbol:
                 return resultado
         return None
 
-    # dame una funcion que devuelva in_orden del arbol, es decir, que recorra el arbol en orden y devuelva una lista con los valores de los nodos en ese orden
-
     def in_orden(self):
+        """ Realiza un recorrido in-orden del árbol y devuelve una lista de los valores. """
+
         resultado = []
         self._in_orden_recursivo(self._raiz, resultado)
         return resultado
 
     def _in_orden_recursivo(self, nodo, resultado):
+        """ Método auxiliar para el recorrido in-orden de manera recursiva. """
+
         if nodo is not None:
             if len(nodo._hijos) > 0:
                 self._in_orden_recursivo(nodo._hijos[0], resultado)
@@ -77,6 +92,8 @@ class Arbol:
             for hijo in nodo._hijos[1:]:
                 self._in_orden_recursivo(hijo, resultado)
 
+
+# Ejemplo de uso del árbol binario
 
 if __name__ == "__main__":
     # Crear un árbol binario
