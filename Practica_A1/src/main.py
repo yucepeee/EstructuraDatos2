@@ -1,9 +1,5 @@
 # filepath: /tkinter-mvc-app/tkinter-mvc-app/src/main.py
-"""
-import tkinter as ctk
-ctk.set_appearance_mode("light")  # Modos: "light", "dark", "system"
-ctk.set_default_color_theme("blue")  # Temas: "blue", "dark
-"""
+
 import tkinter as tk
 from views.view import View
 from controllers.controller import Controller
