@@ -34,11 +34,11 @@ class Controller:
     def insert(self):
         val = self._obtener_valor_numerico()
         if val is not None:
-            exito = self.model.insertar(val)
-            if exito:
-                self.view.update_result(f"Nodo '{val}' insertado correctamente.")
+            if self.model.insertar(val):
+                self.view.update_result(f"Nodo '{val}' insertado.")
+                self.dibujar_estructura()  # Actualiza el Treeview al insertar
             else:
-                self.view.update_result(f"El nodo '{val}' ya existe en el árbol.")
+                self.view.update_result(f"El nodo '{val}' ya existe.")
             self.view.clear_entry()
 
     def buscar(self):
@@ -102,3 +102,26 @@ class Controller:
             else:
                 self.view.update_result(f"El nodo '{val}' no existe en el árbol.")
             self.view.clear_entry()
+
+    def dibujar_estructura(self):
+        """Limpia y vuelve a cargar la estructura jerárquica en el Treeview."""
+        self.view.limpiar_treeview()
+        if self.model.raiz is not None:
+            self._cargar_treeview_recursivo(self.model.raiz, padre="")
+
+    def _cargar_treeview_recursivo(self, nodo, padre=""):
+        if nodo is None:
+            return
+
+        # Generamos un ID único para cada item utilizando su ID en memoria
+        id_nodo = str(id(nodo))
+        etiqueta = f"Nodo: {nodo.valor}" if padre == "" else f"{nodo.valor}"
+
+        # Insertar el nodo actual en el Treeview y expandir por defecto
+        self.view.tree.insert(padre, 'end', id_nodo, text=etiqueta, open=True)
+
+        # Recorrido recursivo para ramas izquierda y derecha
+        if nodo.izquierda:
+            self._cargar_treeview_recursivo(nodo.izquierda, id_nodo)
+        if nodo.derecha:
+            self._cargar_treeview_recursivo(nodo.derecha, id_nodo)

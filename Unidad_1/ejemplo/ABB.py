@@ -161,6 +161,86 @@ class ArbolBB:
 
         return self._tamaño
 
+    def inorden(self):
+        """ Devuelve una lista de los valores del ABB en orden ascendente. """
+        resultado = []
+        self._inorden_recursivo(self._raiz, resultado)
+        return resultado
+
+    def _inorden_recursivo(self, nodo, resultado):
+        """ Método auxiliar para recorrer el ABB en orden de manera recursiva. """
+        if nodo is not None:
+            self._inorden_recursivo(nodo._izquierda, resultado)
+            resultado.append(nodo._valor)
+            self._inorden_recursivo(nodo._derecha, resultado)
+
+    def preorden(self):
+        """ Devuelve una lista de los valores del ABB en preorden. """
+        resultado = []
+        self._preorden_recursivo(self._raiz, resultado)
+        return resultado
+
+    def _preorden_recursivo(self, nodo, resultado):
+        """ Método auxiliar para recorrer el ABB en preorden de manera recursiva. """
+        if nodo is not None:
+            resultado.append(nodo._valor)
+            self._preorden_recursivo(nodo._izquierda, resultado)
+            self._preorden_recursivo(nodo._derecha, resultado)
+
+    def postorden(self):
+        """ Devuelve una lista de los valores del ABB en postorden. """
+        resultado = []
+        self._postorden_recursivo(self._raiz, resultado)
+        return resultado
+
+    def _postorden_recursivo(self, nodo, resultado):
+        """ Método auxiliar para recorrer el ABB en postorden de manera recursiva. """
+        if nodo is not None:
+            self._postorden_recursivo(nodo._izquierda, resultado)
+            self._postorden_recursivo(nodo._derecha, resultado)
+            resultado.append(nodo._valor)
+
+    def recorrido_niveles(self):
+        """ Devuelve una lista de los valores del ABB en recorrido por niveles (BFS). """
+        if self._raiz is None:
+            return []
+
+        resultado = []
+        cola = [self._raiz]
+
+        while cola:
+            nodo_actual = cola.pop(0)
+            resultado.append(nodo_actual._valor)
+
+            if nodo_actual._izquierda is not None:
+                cola.append(nodo_actual._izquierda)
+            if nodo_actual._derecha is not None:
+                cola.append(nodo_actual._derecha)
+
+        return resultado
+
+    def susesor(self, valor):
+        """ Devuelve el sucesor del valor dado en el ABB. """
+        nodo = self._buscar_nodo(self._raiz, valor)
+        if nodo is None:
+            return None
+
+        # Si el nodo tiene hijo derecho, el sucesor es el nodo más a la izquierda del subárbol derecho
+        if nodo._derecha is not None:
+            return self._minimo_recursivo(nodo._derecha)
+
+        # Si no tiene hijo derecho, el sucesor es el primer ancestro que es hijo izquierdo de su padre
+        sucesor = None
+        actual = self._raiz
+        while actual is not None and actual._valor != valor:
+            if valor < actual._valor:
+                sucesor = actual
+                actual = actual._izquierda
+            else:
+                actual = actual._derecha
+
+        return sucesor
+
 # Ejemplo de uso del ABB
 
 if __name__ == "__main__":
@@ -185,3 +265,11 @@ if __name__ == "__main__":
 
     # Cantidad de nodos en el ABB
     print("Cantidad de nodos:", arbol.cantidad_nodos())  # 7
+
+    # Recorridos del ABB
+    print("Inorden:", arbol.inorden())  # [20, 30, 40, 50, 60, 70, 80]
+    print("Preorden:", arbol.preorden())  # [50, 30, 20, 40, 70, 60, 80]
+    print("Postorden:", arbol.postorden())  # [20, 40, 30, 60, 80, 70, 50]
+    print("Recorrido por niveles:", arbol.recorrido_niveles())  # [50, 30, 70, 20, 40, 60, 80]
+
+    

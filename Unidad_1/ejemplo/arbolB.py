@@ -116,3 +116,4 @@ if __name__ == "__main__":
     print(f"Buscar nodo con valor 10: {arbol.buscar(arbol.get_raiz(), 10)}")
     print(f"In-orden del árbol: {arbol.in_orden()}")
 
+    
