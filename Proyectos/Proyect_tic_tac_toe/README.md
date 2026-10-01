@@ -16,54 +16,6 @@ Esta organización permite realizar búsquedas siguiendo únicamente la rama en 
 
 La aplicación permite:
 
-- Insertar números enteros en el ABB.
-- Buscar un valor y comprobar si existe.
-- Verificar si un nodo es una hoja.
-- Consultar la altura del árbol.
-- Consultar la cantidad de nodos.
-- Mostrar los recorridos inorden, preorden y postorden.
-- Informar cuando se intenta insertar un valor duplicado o cuando un valor no existe.
-
-## Ejemplo de estructura
-
-Al insertar los valores `[50, 30, 70, 20, 40, 60, 80]`, el árbol queda así:
-
-```text
-             50
-           /    \
-          30     70
-        /  \    /  \
-       20  40  60  80
-```
-
-El recorrido inorden de este árbol produce los valores ordenados:
-
-```text
-[20, 30, 40, 50, 60, 70, 80]
-```
-
-## Estructura del proyecto
-
-```text
-Practica_A1/
-├── README.md
-├── requirements.txt
-└── src/
-    ├── main.py
-    ├── controllers/
-    │   └── controller.py
-    ├── models/
-    │   └── model.py
-    └── views/
-        └── view.py
-```
-
-### Componentes principales
-
-- `src/models/model.py`: contiene las clases `Nodo` y `ArbolBB`, junto con la lógica del ABB.
-- `src/controllers/controller.py`: conecta las acciones de la interfaz con las operaciones del árbol y valida los datos ingresados.
-- `src/views/view.py`: define la ventana, el campo de entrada, los botones y la presentación de resultados.
-- `src/main.py`: inicia la aplicación y conecta el modelo, la vista y el controlador.
 
 ## Requisitos
 
