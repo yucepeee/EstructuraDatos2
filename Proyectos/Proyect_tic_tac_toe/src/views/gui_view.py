@@ -1,101 +1,109 @@
-from tkinter import Tk, Label, Button, Frame, Entry, ttk
+import tkinter as tk
+from tkinter import messagebox
 
-class View:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("App (ABB)")
+class GameView:
+    def __init__(self, root, controller=None):
+        self.root = root
+        self.root.title("Tres en Raya ")
+        self.root.geometry("500x400")
+        self.root.config(bg="#f0f0f0")
+        
+        self.controller = controller
+        
+        self._create_widgets()
 
-        # Frame principale
-        self.frame = Frame(master)
-        self.frame.pack(padx=10, pady=10, fill="both", expand=True)
+    def set_controller(self, controller):
+        """Asocia el controlador a la vista para manejar eventos de usuario."""
+        self.controller = controller
 
-        # ---------------------------------------------------------
-        # PANEL IZQUIERDO: Botones y Control de Operaciones
-        # ---------------------------------------------------------
-        self.left_panel = Frame(self.frame)
-        self.left_panel.grid(row=0, column=0, sticky="nw", padx=(0, 10))
+    def _create_widgets(self):
+        """Configura los elementos visuales de la ventana principal."""
+        # Título principal
+        title_label = tk.Label(
+            self.root, 
+            text="Tres en Raya (Tic-Tac-Toe)", 
+            font=("Arial", 18, "bold"), 
+            bg="#f0f0f0", 
+            fg="#333333"
+        )
+        title_label.pack(pady=10)
 
-        # Entrada de datos (Input)
-        self.entry_label = Label(self.left_panel, text="Valor del Nodo:", font=("Segoe UI", 9, "bold"))
-        self.entry_label.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 2))
+        # Contenedor principal para dividir tablero y panel lateral
+        main_frame = tk.Frame(self.root, bg="#f0f0f0")
+        main_frame.pack(expand=True)
 
-        self.entry = Entry(self.left_panel, width=22)
-        self.entry.grid(row=1, column=0, columnspan=2, sticky="we", pady=(0, 10))
+        # Marco del Tablero (Grilla de 3x3 botones)
+        self.board_frame = tk.Frame(main_frame, bg="#333333", bd=2)
+        self.board_frame.pack(side=tk.LEFT, padx=15)
 
-        # --- Columna 1 de Botones: Operaciones Básicas ---
-        self.insert_button = Button(self.left_panel, text="Insertar dato")
-        self.insert_button.grid(row=2, column=0, sticky="we", padx=2, pady=2)
+        self.buttons = [[None for _ in range(3)] for _ in range(3)]
+        for r in range(3):
+            for c in range(3):
+                btn = tk.Button(
+                    self.board_frame,
+                    text="",
+                    font=("Arial", 24, "bold"),
+                    width=4,
+                    height=2,
+                    bg="#ffffff",
+                    activebackground="#e0e0e0",
+                    command=lambda row=r, col=c: self._handle_click(row, col)
+                )
+                btn.grid(row=r, column=c, padx=2, pady=2)
+                self.buttons[r][c] = btn
 
-        self.buscar_button = Button(self.left_panel, text="Buscar dato")
-        self.buscar_button.grid(row=3, column=0, sticky="we", padx=2, pady=2)
+        # Panel Lateral de Estado y Controles
+        side_panel = tk.Frame(main_frame, bg="#f0f0f0")
+        side_panel.pack(side=tk.RIGHT, padx=15, fill=tk.Y)
 
-        self.eliminar_button = Button(self.left_panel, text="Eliminar Nodo")
-        self.eliminar_button.grid(row=4, column=0, sticky="we", padx=2, pady=2)
+        self.status_label = tk.Label(
+            side_panel,
+            text="Turno: X",
+            font=("Arial", 12, "bold"),
+            bg="#f0f0f0",
+            fg="#0056b3"
+        )
+        self.status_label.pack(pady=20)
 
-        self.sucesor_button = Button(self.left_panel, text="Sucesor")
-        self.sucesor_button.grid(row=5, column=0, sticky="we", padx=2, pady=2)
+        reset_button = tk.Button(
+            side_panel,
+            text="Reiniciar Partida",
+            font=("Arial", 10),
+            bg="#d9534f",
+            fg="white",
+            activebackground="#c9302c",
+            activeforeground="white",
+            command=self._handle_reset
+        )
+        reset_button.pack(fill=tk.X, pady=5)
 
-        self.es_hoja_button = Button(self.left_panel, text="Es Hoja?")
-        self.es_hoja_button.grid(row=6, column=0, sticky="we", padx=2, pady=2)
+    def _handle_click(self, row, col):
+        """Notifica al controlador cuando el usuario hace clic en una casilla."""
+        if self.controller:
+            self.controller.handle_board_click(row, col)
 
-        # --- Columna 2 de Botones: Consultas y Recorridos ---
-        self.altura_button = Button(self.left_panel, text="Altura del Árbol")
-        self.altura_button.grid(row=2, column=1, sticky="we", padx=2, pady=2)
+    def _handle_reset(self):
+        """Notifica al controlador para reiniciar el juego."""
+        if self.controller:
+            self.controller.handle_reset_click()
 
-        self.cantidad_nodos_button = Button(self.left_panel, text="Cantidad de Nodos")
-        self.cantidad_nodos_button.grid(row=3, column=1, sticky="we", padx=2, pady=2)
+    def update_board_ui(self, board_matrix):
+        """Actualiza el texto y estado visual de los botones según la matriz del modelo."""
+        for r in range(3):
+            for c in range(3):
+                val = board_matrix[r][c]
+                self.buttons[r][c].config(text=val)
+                if val == "X":
+                    self.buttons[r][c].config(fg="#007bff")
+                elif val == "O":
+                    self.buttons[r][c].config(fg="#dc3545")
+                else:
+                    self.buttons[r][c].config(fg="#000000")
 
-        self.inorden_button = Button(self.left_panel, text="Mostrar Inorden")
-        self.inorden_button.grid(row=4, column=1, sticky="we", padx=2, pady=2)
+    def update_status(self, text, color="#0056b3"):
+        """Actualiza el texto del panel de estado lateral."""
+        self.status_label.config(text=text, fg=color)
 
-        self.preorden_button = Button(self.left_panel, text="Mostrar Preorden")
-        self.preorden_button.grid(row=5, column=1, sticky="we", padx=2, pady=2)
-
-        self.postorden_button = Button(self.left_panel, text="Mostrar Postorden")
-        self.postorden_button.grid(row=6, column=1, sticky="we", padx=2, pady=2)
-
-        self.recorrido_niveles_button = Button(self.left_panel, text="Recorrido por Niveles")
-        self.recorrido_niveles_button.grid(row=7, column=0, columnspan=2, sticky="we", padx=2, pady=2)
-
-        # Etiqueta para mostrar resultados
-        self.result_label = Label(self.left_panel, text="R: -", font=("Segoe UI", 9, "italic"), wraplength=200, justify="left")
-        self.result_label.grid(row=8, column=0, columnspan=2, sticky="w", pady=(10, 0))
-
-        # ---------------------------------------------------------
-        # PANEL DERECHO: Visualización del Árbol (Treeview)
-        # ---------------------------------------------------------
-        self.tree_frame = Frame(self.frame)
-        self.tree_frame.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
-
-        # Configurar expansión proporcional de la columna derecha
-        self.frame.columnconfigure(1, weight=1)
-        self.frame.rowconfigure(0, weight=1)
-
-        self.tree = ttk.Treeview(self.tree_frame, height=15)
-        self.tree.heading('#0', text='Estructura ABB', anchor='w')
-        self.tree.pack(side="left", fill="both", expand=True)
-
-        # Scrollbar vertical
-        self.scrollbar = ttk.Scrollbar(self.tree_frame, orient="vertical", command=self.tree.yview)
-        self.tree.configure(yscrollcommand=self.scrollbar.set)
-        self.scrollbar.pack(side="right", fill="y")
-
-    # ---------------------------------------------------------
-    # Métodos para interactuar con la vista
-    # ---------------------------------------------------------
-    def get_entry_value(self):
-        """Devuelve el valor ingresado en el campo de texto."""
-        return self.entry.get().strip()
-
-    def update_result(self, text):
-        """Actualiza la etiqueta con la respuesta obtenida."""
-        self.result_label.config(text=f"R: {text}")
-
-    def clear_entry(self):
-        """Limpia el campo de texto."""
-        self.entry.delete(0, 'end')
-
-    def limpiar_treeview(self):
-        """Elimina todos los elementos del Treeview."""
-        for item in self.tree.get_children():
-            self.tree.delete(item)
+    def show_message(self, title, message):
+        """Muestra una ventana emergente (MessageBox) con resultados o avisos."""
+        messagebox.showinfo(title, message)

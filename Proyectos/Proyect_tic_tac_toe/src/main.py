@@ -1,9 +1,9 @@
 # filepath: /tkinter-mvc-app/tkinter-mvc-app/src/main.py
 
 import tkinter as tk
-from views.gui_view import View
-from controllers.game_controller import Controller
-from models.game_model import ArbolBB as Model
+from views.gui_view import GameView
+from controllers.game_controller import GameController
+from models.game_model import GameModel 
 
 def main():
     root = tk.Tk()
@@ -24,9 +24,9 @@ def main():
 
     root.geometry(f"+{x}+{y}")
     
-    model = Model()
-    view = View(root)
-    controller = Controller(model, view)
+    model = GameModel()
+    view = GameView(root)
+    controller = GameController(model, view)
     
     root.mainloop()
 
