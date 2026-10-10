@@ -1,11 +1,10 @@
 import tkinter as tk
-from tkinter import messagebox
 
 class GameView:
     def __init__(self, root, controller=None):
         self.root = root
-        self.root.title("Tres en Raya ")
-        self.root.geometry("500x400")
+        self.root.title("Tres en Raya - IA & Machine Learning")
+        self.root.geometry("500x450")
         self.root.config(bg="#f0f0f0")
         
         self.controller = controller
@@ -18,7 +17,6 @@ class GameView:
 
     def _create_widgets(self):
         """Configura los elementos visuales de la ventana principal."""
-        # Título principal
         title_label = tk.Label(
             self.root, 
             text="Tres en Raya (Tic-Tac-Toe)", 
@@ -28,7 +26,6 @@ class GameView:
         )
         title_label.pack(pady=10)
 
-        # Contenedor principal para dividir tablero y panel lateral
         main_frame = tk.Frame(self.root, bg="#f0f0f0")
         main_frame.pack(expand=True)
 
@@ -63,7 +60,52 @@ class GameView:
             bg="#f0f0f0",
             fg="#0056b3"
         )
-        self.status_label.pack(pady=20)
+        self.status_label.pack(pady=10)
+
+        # Selector de Modo de Juego
+        self.game_mode_var = tk.StringVar(value="IA")
+        mode_frame = tk.LabelFrame(side_panel, text="Modo de Juego", font=("Arial", 10, "bold"), bg="#f0f0f0", fg="#333333")
+        mode_frame.pack(fill=tk.X, pady=5, padx=5)
+
+        tk.Radiobutton(
+            mode_frame, text="Humano vs IA", variable=self.game_mode_var, value="IA",
+            bg="#f0f0f0", font=("Arial", 9), command=self._handle_reset
+        ).pack(anchor="w", padx=5, pady=2)
+
+        tk.Radiobutton(
+            mode_frame, text="Humano vs Humano", variable=self.game_mode_var, value="Humano",
+            bg="#f0f0f0", font=("Arial", 9), command=self._handle_reset
+        ).pack(anchor="w", padx=5, pady=2)
+
+        # Marco de Métricas para la IA (Día 5)
+        metrics_frame = tk.LabelFrame(
+            side_panel, 
+            text="Métricas de IA (Minimax)", 
+            font=("Arial", 10, "bold"), 
+            bg="#f0f0f0", 
+            fg="#333333"
+        )
+        metrics_frame.pack(fill=tk.X, pady=10, padx=5)
+
+        self.nodes_label = tk.Label(
+            metrics_frame, 
+            text="Nodos evaluados: 0", 
+            font=("Arial", 9), 
+            bg="#f0f0f0", 
+            fg="#555555", 
+            anchor="w"
+        )
+        self.nodes_label.pack(fill=tk.X, padx=5, pady=2)
+
+        self.time_label = tk.Label(
+            metrics_frame, 
+            text="Tiempo: 0.0 ms", 
+            font=("Arial", 9), 
+            bg="#f0f0f0", 
+            fg="#555555", 
+            anchor="w"
+        )
+        self.time_label.pack(fill=tk.X, padx=5, pady=2)
 
         reset_button = tk.Button(
             side_panel,
@@ -75,20 +117,17 @@ class GameView:
             activeforeground="white",
             command=self._handle_reset
         )
-        reset_button.pack(fill=tk.X, pady=5)
+        reset_button.pack(fill=tk.X, pady=10)
 
     def _handle_click(self, row, col):
-        """Notifica al controlador cuando el usuario hace clic en una casilla."""
         if self.controller:
             self.controller.handle_board_click(row, col)
 
     def _handle_reset(self):
-        """Notifica al controlador para reiniciar el juego."""
         if self.controller:
             self.controller.handle_reset_click()
 
     def update_board_ui(self, board_matrix):
-        """Actualiza el texto y estado visual de los botones según la matriz del modelo."""
         for r in range(3):
             for c in range(3):
                 val = board_matrix[r][c]
@@ -101,9 +140,12 @@ class GameView:
                     self.buttons[r][c].config(fg="#000000")
 
     def update_status(self, text, color="#0056b3"):
-        """Actualiza el texto del panel de estado lateral."""
         self.status_label.config(text=text, fg=color)
 
+    def update_metrics(self, nodes, elapsed_ms):
+        self.nodes_label.config(text=f"Nodos evaluados: {nodes}")
+        self.time_label.config(text=f"Tiempo: {elapsed_ms:.1f} ms")
+
     def show_message(self, title, message):
-        """Muestra una ventana emergente (MessageBox) con resultados o avisos."""
-        messagebox.showinfo(title, message)
+        # Ya no se usan ventanas emergentes (MessageBox), se reemplaza por espacio visual o se omite.
+        pass

@@ -23,26 +23,12 @@ src/
 │   └── game_controller.py
 ├── models/
 │   └── game_model.py
+|   └── minimax_agent.py
+|   └── ml_agent.py
 └── views/
     └── gui_view.py
 ```
 
-## Funcionalidades
-
-La aplicación permite:
-
-- Hacer clic en cualquier casilla del tablero para jugar
-- Evitar movimientos inválidos en casillas ocupadas
-- Mostrar el turno actual en la interfaz
-- Determinar si hubo ganador o empate
-- Reiniciar la partida en cualquier momento
-
-## Requisitos
-
-- Python 3
-- Tkinter, incluido normalmente en la instalación estándar de Python
-
-El archivo `requirements.txt` no requiere paquetes externos.
 
 ## Ejecución
 
@@ -85,6 +71,23 @@ La clase `GameView` crea y actualiza la interfaz gráfica con Tkinter:
 | `update_board_ui(board_matrix)` | Actualiza el texto y color de cada casilla del tablero. |
 | `update_status(text, color)` | Cambia el texto y el color del estado actual. |
 | `show_message(title, message)` | Muestra un mensaje emergente. |
+
+## Funcionalidades
+
+La aplicación permite:
+
+- Hacer clic en cualquier casilla del tablero para jugar
+- Evitar movimientos inválidos en casillas ocupadas
+- Mostrar el turno actual en la interfaz
+- Determinar si hubo ganador o empate
+- Reiniciar la partida en cualquier momento
+
+## Requisitos
+
+- Python 3
+- Tkinter, incluido normalmente en la instalación estándar de Python
+
+El archivo `requirements.txt` no requiere paquetes externos.
 
 ## Autor
 
