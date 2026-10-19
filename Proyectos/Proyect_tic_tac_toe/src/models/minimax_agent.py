@@ -7,6 +7,9 @@ class MinimaxAgent:
         self.nodes_evaluated = 0
 
     def evaluate(self, board):
+        """
+        Evalua el tablero y devuelve un puntaje:
+        +10 si la IA gana, -10 si el humano gana, 0 en caso de empate."""
         if board.check_winner(self.ai_player):
             return 10
         elif board.check_winner(self.human_player):
@@ -14,6 +17,9 @@ class MinimaxAgent:
         return 0
 
     def minimax(self, board, depth, is_maximizing):
+        """
+        Implementa el algoritmo Minimax para encontrar la mejor jugada.
+        """
         self.nodes_evaluated += 1
         
         score = self.evaluate(board)
@@ -42,6 +48,9 @@ class MinimaxAgent:
             return best_score
 
     def get_best_move(self, board):
+        """
+        Encuentra la mejor jugada para la IA usando Minimax.
+        """
         self.nodes_evaluated = 0
         best_score = -float('inf')
         best_move = None

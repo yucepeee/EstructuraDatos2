@@ -1,2 +1,3 @@
-# Este proyecto no requiere paquetes externos.
-# tkinter viene incluido con la instalacion estandar de Python.
+pandas
+scikit-learn
+matplotlib

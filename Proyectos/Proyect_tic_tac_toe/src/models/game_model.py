@@ -14,7 +14,8 @@ class GameModel:
     def make_move(self, move_or_row, col=None, player=None):
         if isinstance(move_or_row, tuple):
             row, c = move_or_row
-            p = player if player else self.current_player
+            actual_player = player if player is not None else col
+            p = actual_player if actual_player else self.current_player
         else:
             row = move_or_row
             c = col
