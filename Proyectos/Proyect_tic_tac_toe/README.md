@@ -106,9 +106,6 @@ python -m unittest discover -s src -p "test.py"
 - **Minimax:** con una evaluación y búsqueda correctas hasta el final de la partida, elige una jugada óptima para el estado actual; puede haber varias jugadas igualmente óptimas.
 - **Árbol de decisión:** aproxima las jugadas de Minimax a partir de los ejemplos generados. El proyecto informa tanto la precisión calculada en una partición de validación como la coincidencia de jugadas observada en la comparativa. Son métricas distintas y sus resultados dependen del conjunto de datos; el modelo puede recomendar una jugada subóptima en estados no representados adecuadamente.
 
-### Conclusión pedagógica
-
-El Tres en Raya permite explorar con Minimax todo el árbol de jugadas en una escala manejable y comparar la búsqueda con una inferencia aprendida a partir de datos. La comparación ilustra el intercambio entre explorar estados para decidir y entrenar previamente un modelo que produce una respuesta recorriendo un árbol de decisión.
 
 ## Autoría
 

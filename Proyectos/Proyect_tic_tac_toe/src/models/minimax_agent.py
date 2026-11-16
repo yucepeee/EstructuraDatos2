@@ -9,7 +9,8 @@ class MinimaxAgent:
     def evaluate(self, board):
         """
         Evalua el tablero y devuelve un puntaje:
-        +10 si la IA gana, -10 si el humano gana, 0 en caso de empate."""
+        +10 si la IA gana, -10 si el humano gana, 0 en caso de empate.
+        """
         if board.check_winner(self.ai_player):
             return 10
         elif board.check_winner(self.human_player):
